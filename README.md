@@ -19,7 +19,7 @@ Learn very important ways to program with Object Oriented Data Driven Class Patt
 2. Choose Download ZIP
 3. Save the Zip File
 4. Extract All
-5. Double click the HTML file to start the App
+5. Double click the .md file to start the App
 
 ---
 

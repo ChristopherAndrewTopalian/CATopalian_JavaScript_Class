@@ -5,13 +5,13 @@ let vehicleData =
     {
         name: 'RoadRunner',
         power: 'Turbo Boost',
-        hp: 180,
+        hp: 170,
         type: 'Car'
     },
     {
         name: 'IronHauler',
         power: 'Heavy Pull',
-        hp: 260,
+        hp: 250,
         type: 'Truck'
     }
 ];

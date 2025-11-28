@@ -3,6 +3,8 @@ Learn very important ways to program with Object Oriented Data Driven Class Patt
 
 ---
 
+![001](src/media/textures/bg/001.jpg)
+
 # Class
 [CATopalian_JavaScript_Creature_Class](src/js/0001/a/CATopalian_JavaScript_Creature_Class.js)
 

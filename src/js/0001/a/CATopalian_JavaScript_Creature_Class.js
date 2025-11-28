@@ -1,4 +1,4 @@
-// CATopalian_Creature_Class.js
+// CATopalian_JavaScript_Creature_Class.js
 
 let creatureData = 
 [

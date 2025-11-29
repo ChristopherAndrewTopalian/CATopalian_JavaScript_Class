@@ -18,9 +18,9 @@ Learn very important ways to program with Object Oriented Data Driven Class Patt
 
 [CATopalian_JavaScript_Creature_Class](src/js/0002/a/CATopalian_JavaScript_Creature_Class.js)
 
-[CATopalian_JavaScript_Creature_Class](src/js/0002/b/CATopalian_JavaScript_Vehicle_Class.js)
+[CATopalian_JavaScript_Vehicle_Class](src/js/0002/b/CATopalian_JavaScript_Vehicle_Class.js)
 
-[CATopalian_JavaScript_Creature_Class](src/js/0002/c/CATopalian_JavaScript_Pokemon_Class.js)
+[CATopalian_JavaScript_Pokemon_Class](src/js/0002/c/CATopalian_JavaScript_Pokemon_Class.js)
 
 ---
 

@@ -28,6 +28,8 @@ Learn very important ways to program with Object Oriented Data Driven Class Patt
 
 [CATopalian_JavaScript_Creature_Class](src/js/0003/a/CATopalian_JavaScript_Creature_Class.js)
 
+Video: https://www.youtube.com/watch?v=dDTdQsaqsDQ
+
 ---
 
 ### How to Download this App

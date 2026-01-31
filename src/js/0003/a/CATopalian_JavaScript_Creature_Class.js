@@ -8,7 +8,7 @@ let creatureData =
         power: 'Lightning Burst',
         hp: 35,
         type: 'Electric',
-        // new property stored directly in the object
+        // This property is unique to Electric types
         charge: 100
     },
     {
@@ -55,11 +55,12 @@ function cl(whichMessage)
 
 //----//
 
+// THE BASE CLASS
+// Handles the shared logic: Name, HP, basic Power
 class Creature
 {
     constructor(info)
     {
-        // base properties
         this.name = info.name;
         this.power = info.power;
         this.hp = info.hp;
@@ -79,28 +80,36 @@ class Creature
 
 //----//
 
-class Sparkling extends Creature
+// THE TYPE CLASS
+class ElectricCreature extends Creature
 {
     constructor(info)
     {
+        // Pass basic info to the parent Creature class
         super(info);
 
-        // extended class only properties
-        this.charge = info.charge;
+        // Initialize Electric-specific properties
+        // Safety: default to 0 if 'charge' is missing in the data
+        this.charge = info.charge || 0; 
         this.electricAffinity = 0.85;
     }
 
     specialMove()
     {
-        cl(this.name + ' unleashed Thunder Spiral!');
+        cl(this.name + ' unleashed an Electric Spiral!');
     }
 
     useCharge()
     {
-        // draining charge
-        this.charge = this.charge - 10;
-
-        cl(this.name + ' now has ' + this.charge + ' charge left');
+        if (this.charge >= 10)
+        {
+            this.charge = this.charge - 10;
+            cl(this.name + ' now has ' + this.charge + ' charge left');
+        }
+        else
+        {
+            cl(this.name + ' is out of charge!');
+        }
     }
 
     electricDash()
@@ -111,38 +120,41 @@ class Sparkling extends Creature
 
 //----//
 
-// es6
-//let sparklingFind = creatureData.find(p => p.name === 'Sparkling');
-
-// es5
+// es5 find
 let sparklingFind = creatureData.find(function(p)
 {
     return p.name === 'Sparkling';
 });
 
-let sparkling = new Sparkling(sparklingFind);
+// Create the instance using the generic TYPE class
+// We check if data was found to prevent errors
+if (sparklingFind)
+{
+    let sparkling = new ElectricCreature(sparklingFind);
 
-//----//
+    //----//
 
-// sparkling actions
-sparkling.sayName();
-sparkling.specialMove();
-sparkling.useCharge();
-sparkling.electricDash();
+    // sparkling actions
+    sparkling.sayName(); // Inherited from Creature
+    sparkling.specialMove(); // Specific to ElectricCreature
+    sparkling.useCharge();    // Specific to ElectricCreature
+    sparkling.electricDash(); // Specific to ElectricCreature
+}
 
 //----//
 
 /*
+Output:
 Sparkling
-Sparkling unleashed Thunder Spiral!
+Sparkling unleashed an Electric Spiral!
 Sparkling now has 90 charge left
-Sparkling is dashing with current.
+Sparkling is Dashing with Current.
 */
 
 //----//
 
 // Dedicated to God the Father
-// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2025
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2026
 // https://github.com/ChristopherTopalian
 // https://github.com/ChristopherAndrewTopalian
 // https://sites.google.com/view/CollegeOfScripting

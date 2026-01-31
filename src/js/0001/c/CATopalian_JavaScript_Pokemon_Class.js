@@ -19,28 +19,28 @@ let pokemonData =
 //----//
 
 // fibn.js
-
+// Utility: Find item by name (case-insensitive)
 function fibn(array, name)
 {
     for (let i = 0; i < array.length; i++)
     {
         if (array[i].name.toLowerCase() === name.toLowerCase())
         {
-            // return the element
             return array[i];
         }
     }
-    // not found
     return null;
 }
 
 //----//
 
+// THE BASE CLASS
+// Contains properties and methods shared by ALL Pokemon, regardless of type.
 class Pokemon
 {
     constructor(info)
     {
-        // info is an object with name, power, hp, etc.
+        // Hydrate the object with data from our JSON source
         this.name = info.name;
         this.power = info.power;
         this.hp = info.hp;
@@ -49,47 +49,64 @@ class Pokemon
 
     sayName()
     {
-        alert(this.name);
+        console.log(this.name);
     }
 
-    // shared battle function
     attack()
     {
-        alert(this.name + ' used ' + this.power);
+        console.log(this.name + ' used ' + this.power);
     }
 }
 
-class Pikachu extends Pokemon
+// THE SUB-CLASS (TYPE SPECIFIC)
+// We extend based on Type
+class ElectricPokemon extends Pokemon
 {
     constructor(info)
     {
-        super(info);
+        super(info); 
+        // we can add specific electric properties here (e.g., this.voltage = 1000;)
     }
 
     specialMove()
     {
-        alert(this.name + ' used Volt Tackle!');
+        // Logic specific to the Electric type
+        console.log(this.name + ' is charging up static electricity!');
     }
 }
 
 //----//
 
-let pikachu = new Pikachu(fibn(pokemonData, 'Pikachu'));
+// Retrieve the raw data object
+let pikachuData = fibn(pokemonData, 'Pikachu');
 
-//----//
+// Instantiate using the Type Class
+// We check if data exists to prevent errors
+if (pikachuData)
+{
+    let pikachu = new ElectricPokemon(pikachuData);
 
-pikachu.specialMove();
+    //----//
+
+    // use a shared method (from Pokemon class)
+    pikachu.attack(); 
+
+    // use the type-specific methods (from ElectricPokemon class)
+    pikachu.specialMove();
+}
 
 //----//
 
 /*
-Pikachu used Volt Tackle!
+Output:
+Pikachu used Thunderbolt
+Pikachu is charging up static electricity!
 */
 
 //----//
 
 // Dedicated to God the Father
-// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2025
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2026
 // https://github.com/ChristopherTopalian
 // https://github.com/ChristopherAndrewTopalian
 // https://sites.google.com/view/CollegeOfScripting

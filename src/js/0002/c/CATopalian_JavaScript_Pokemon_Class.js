@@ -8,8 +8,6 @@ let pokemonData =
         power: 'Thunderbolt',
         hp: 35,
         type: 'Electric',
-
-        // new property
         stamina: 100
     },
     {
@@ -67,90 +65,107 @@ function fibn(array, name)
 
 //----//
 
+// THE BASE CLASS
+// Holds everything that is SHARED by all Pokemon (HP, Name, Power, Stamina)
 class Pokemon
 {
     constructor(info)
     {
-        // base properties
         this.name = info.name;
         this.power = info.power;
         this.hp = info.hp;
         this.type = info.type;
+
+        // Safety Pattern: default to 100 if missing
+        this.stamina = info.stamina || 100;
     }
 
     sayName()
     {
         cl(this.name);
-        alert(this.name);
     }
 
     attack()
     {
         cl(this.name + ' used ' + this.power);
-        alert(this.name + ' used ' + this.power);
+    }
+
+    useStamina()
+    {
+        if (this.stamina >= 15)
+        {
+            this.stamina = this.stamina - 15;
+            cl(this.name + ' now has ' + this.stamina + ' stamina left');
+
+        }
+        else
+        {
+            cl(this.name + ' is too tired!');
+        }
     }
 }
 
 //----//
 
-class Pikachu extends Pokemon
+// THE SUB-CLASS (Specific to Electric)
+class ElectricPokemon extends Pokemon
 {
     constructor(info)
     {
+        // Send shared info (including stamina) up to Pokemon class
         super(info);
 
-        // new extended class properties
-        this.stamina = info.stamina;
+        // Electric-only properties
         this.electricSkill = 0.92;
     }
 
     specialMove()
     {
-        cl(this.name + ' used Volt Tackle!');
-        alert(this.name + ' used Volt Tackle!');
+        cl(this.name + ' unleashed a High Voltage Attack!');
     }
 
-    useStamina()
-    {
-        this.stamina = this.stamina - 15;
-
-        cl(this.name + ' now has ' + this.stamina + ' stamina left');
-        alert(this.name + ' now has ' + this.stamina + ' stamina left');
-    }
-
+    // This is specific flavor text, so it stays in the subclass
     sparkDash()
     {
         cl(this.name + ' dashed with sparks!');
-        alert(this.name + ' dashed with sparks!');
     }
 }
 
 //----//
 
-let pikachu = new Pikachu(fibn(pokemonData, 'Pikachu'));
+// Find Data
+let pikachuData = fibn(pokemonData, 'Pikachu');
 
-//----//
+// Create Instance (Safety Check)
+if (pikachuData)
+{
+    // We use ElectricPokemon because the type is Electric
+    let pikachu = new ElectricPokemon(pikachuData);
 
-pikachu.sayName();
-pikachu.attack();
-pikachu.useStamina();
-pikachu.sparkDash();
-pikachu.specialMove();
+    //----//
+
+    pikachu.sayName();
+    pikachu.attack();
+    pikachu.useStamina(); // Now works via the Base Class!
+    pikachu.sparkDash(); // Specific to Electric
+    pikachu.specialMove();
+}
 
 //----//
 
 /*
+Output:
 Pikachu
 Pikachu used Thunderbolt
 Pikachu now has 85 stamina left
 Pikachu dashed with sparks!
-Pikachu used Volt Tackle!
+Pikachu unleashed a High Voltage Attack!
 */
 
 //----//
 
 // Dedicated to God the Father
-// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2025
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2026
 // https://github.com/ChristopherTopalian
 // https://github.com/ChristopherAndrewTopalian
 // https://sites.google.com/view/CollegeOfScripting

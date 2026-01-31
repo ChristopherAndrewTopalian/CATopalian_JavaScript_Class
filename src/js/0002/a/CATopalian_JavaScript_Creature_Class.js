@@ -1,5 +1,10 @@
 // CATopalian_JavaScript_Creature_Class.js
 
+/*
+    This demonstrates how to handle specific data (like 'charge') 
+    that only belongs to certain types of creatures.
+*/
+
 // base creature data
 let creatureData = 
 [
@@ -8,8 +13,9 @@ let creatureData =
         power: 'Lightning Burst',
         hp: 35,
         type: 'Electric',
-
-        // new property stored directly in the object
+        
+        // This property is specific to Electric types.
+        // The ElectricCreature class will know to look for this.
         charge: 100
     },
     {
@@ -72,11 +78,12 @@ function fibn(array, name)
 
 //----//
 
+// THE BASE CLASS
+// Handles the stuff everyone has (HP, Name, basic Power)
 class Creature
 {
     constructor(info)
     {
-        // base properties
         this.name = info.name;
         this.power = info.power;
         this.hp = info.hp;
@@ -86,74 +93,81 @@ class Creature
     sayName()
     {
         cl(this.name);
-
-        alert(this.name);
     }
 
     attack()
     {
         cl(this.name + ' used ' + this.power);
-
-        alert(this.name + ' used ' + this.power);
     }
 }
 
 //----//
 
-class Sparkling extends Creature
+// THE TYPE CLASS
+class ElectricCreature extends Creature
 {
     constructor(info)
     {
+        // Send the info up to the parent Creature class
         super(info);
 
-        // new extended class only properties
-        this.charge = info.charge;
+        // Handle Electric-only properties
+        // We set a default of 0 just in case the data is missing 'charge'
+        this.charge = info.charge || 0; 
         this.electricAffinity = 0.85;
     }
 
+    // this is an electric move
     specialMove()
     {
-        cl(this.name + ' unleashed Thunder Spiral!');
-
-        alert(this.name + ' unleashed Thunder Spiral!');
+        cl(this.name + ' unleashed an Electric Spiral!');
     }
 
     useCharge()
     {
-        // draining charge
-        this.charge = this.charge - 10;
-
-        cl(this.name + ' now has ' + this.charge + ' charge left');
-
-        alert(this.name + ' now has ' + this.charge + ' charge left');
+        if (this.charge >= 10)
+        {
+            this.charge = this.charge - 10;
+            cl(this.name + ' now has ' + this.charge + ' charge left');
+        }
+        else
+        {
+            cl(this.name + ' is out of charge!');
+        }
     }
 
     electricDash()
     {
         cl(this.name + ' is Dashing with Current.');
-
-        alert(this.name + ' is Dashing with Current.');
     }
 }
 
 //----//
 
-// create instance from array data
-let sparkling = new Sparkling(fibn(creatureData, 'Sparkling'));
+// Find the data
+let sparklingData = fibn(creatureData, 'Sparkling');
 
-//----//
+// Create the instance using the Type Class
+if (sparklingData)
+{
+    // We use ElectricCreature because the data.type is 'Electric'
+    let sparkling = new ElectricCreature(sparklingData);
 
-// sparkling actions
-sparkling.sayName();
-sparkling.specialMove();
-sparkling.useCharge();
-sparkling.electricDash();
+    //----//
+
+    // actions
+    sparkling.sayName(); // from Base Class
+    sparkling.specialMove(); // from Electric Class
+    sparkling.useCharge(); // from Electric Class
+    sparkling.electricDash(); // from Electric Class
+}
 
 //----//
 
 /*
+Output:
 Sparkling
-Sparkling unleashed Thunder Spiral!
+Sparkling unleashed an Electric Spiral!
 Sparkling now has 90 charge left
 Sparkling is dashing with current.
 */
@@ -161,7 +175,7 @@ Sparkling is dashing with current.
 //----//
 
 // Dedicated to God the Father
-// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2025
+// All Rights Reserved Christopher Andrew Topalian Copyright 2000-2026
 // https://github.com/ChristopherTopalian
 // https://github.com/ChristopherAndrewTopalian
 // https://sites.google.com/view/CollegeOfScripting

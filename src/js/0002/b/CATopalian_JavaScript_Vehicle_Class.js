@@ -8,8 +8,6 @@ let vehicleData =
         power: 'Turbo Boost',
         hp: 170,
         type: 'Car',
-
-        // new property
         fuel: 100
     },
     {
@@ -17,31 +15,16 @@ let vehicleData =
         power: 'Heavy Pull',
         hp: 250,
         type: 'Truck',
-        fuel: 180
+        fuel: 180,
+
+        // New property specific to Trucks
+        cargoCapacity: 5000
     }
 ];
 
 //----//
 
 // shortcuts
-
-function ge(whichId)
-{
-    let result = document.getElementById(whichId);
-    return result;
-}
-
-function ce(whichType)
-{
-    let result = document.createElement(whichType);
-    return result;
-}
-
-function ba(whichElement)
-{
-    let result = document.body.append(whichElement);
-    return result;
-}
 
 function cl(whichMessage)
 {
@@ -67,83 +50,135 @@ function fibn(array, name)
 
 //----//
 
+// THE BASE CLASS
+// Holds properties shared by ALL vehicles
 class Vehicle
 {
     constructor(info)
     {
-        // base properties
         this.name = info.name;
         this.power = info.power;
         this.hp = info.hp;
         this.type = info.type;
+
+        // Safety: default to 100 if missing
+        this.fuel = info.fuel || 100;
     }
 
     identify()
     {
-        cl('this is ' + this.name);
-        alert('this is ' + this.name);
+        cl('This is ' + this.name);
     }
 
     usePower()
     {
         cl(this.name + ' activated ' + this.power);
-        alert(this.name + ' activated ' + this.power);
+    }
+
+    useFuel()
+    {
+        if (this.fuel >= 10)
+        {
+            this.fuel = this.fuel - 10;
+            cl(this.name + ' now has ' + this.fuel + ' fuel left');
+        }
+        else
+        {
+            cl(this.name + ' is out of fuel!');
+        }
     }
 }
 
 //----//
 
+// THE SUB-CLASS (Car Specific)
 class Car extends Vehicle
 {
     constructor(info)
     {
         super(info);
 
-        // new extended class properties
-        this.fuel = info.fuel;
+        // Car-only properties
         this.traction = 0.85;
     }
 
     drift()
     {
         cl(this.name + ' performed a drift!');
-        alert(this.name + ' performed a drift!');
-    }
-
-    useFuel()
-    {
-        this.fuel = this.fuel - 10;
-
-        cl(this.name + ' now has ' + this.fuel + ' fuel left');
-        alert(this.name + ' now has ' + this.fuel + ' fuel left');
     }
 
     turboDash()
     {
         cl(this.name + ' dashed forward with turbo!');
-        alert(this.name + ' dashed forward with turbo!');
+    }
+}
+
+// THE SUB-CLASS (Truck Specific)
+class Truck extends Vehicle
+{
+    constructor(info)
+    {
+        // Send the info up to Vehicle class
+        super(info);
+
+        // Load the Truck-specific cargo capacity
+        // Safety: default to 1000 lbs if missing
+        this.cargoCapacity = info.cargoCapacity || 1000;
+    }
+
+    haul()
+    {
+        cl(this.name + ' is hauling a heavy load of ' + this.cargoCapacity + ' lbs!');
     }
 }
 
 //----//
 
-// create instance
-let roadrunner = new Car(fibn(vehicleData, 'RoadRunner'));
+// CAR EXAMPLE
+let roadRunnerData = fibn(vehicleData, 'RoadRunner');
+
+if (roadRunnerData)
+{
+    let roadrunner = new Car(roadRunnerData);
+
+    roadrunner.identify();
+    roadrunner.useFuel();
+    roadrunner.drift(); 
+}
 
 //----//
 
-roadrunner.identify();
-roadrunner.useFuel();
-roadrunner.drift();
-roadrunner.turboDash();
+// TRUCK EXAMPLE
+let haulerData = fibn(vehicleData, 'IronHauler');
+
+if (haulerData)
+{
+    let hauler = new Truck(haulerData);
+
+    hauler.identify();
+    
+    // This method now uses the new property we just added
+    hauler.haul(); 
+}
 
 //----//
 
 /*
-this is RoadRunner
+Output:
+This is RoadRunner
 RoadRunner now has 90 fuel left
 RoadRunner performed a drift!
-RoadRunner dashed forward with turbo!
+This is IronHauler
+IronHauler is hauling a heavy load of 5000 lbs!
+*/
+
+//----//
+
+/*
+    This shows adding unique properties to sub-classes.
+    - Cars get 'traction' (for drifting)
+    - Trucks get 'cargoCapacity' (for hauling)
+    - EVERYONE gets 'fuel' (from the parent Vehicle class)
 */
 
 //----//

@@ -18,9 +18,18 @@ let vehicleData =
 
 //----//
 
+// shortcuts
+
+function cl(whichMessage)
+{
+    let result = console.log(whichMessage);
+    return result;
+}
+
+//----//
+
 // fibn.js
 // find by name (case-insensitive)
-
 function fibn(array, name)
 {
     for (let i = 0; i < array.length; i++)
@@ -35,11 +44,12 @@ function fibn(array, name)
 
 //----//
 
+// THE BASE CLASS
+// Shared logic for ALL vehicles
 class Vehicle
 {
     constructor(info)
     {
-        // info has name, power, hp, type
         this.name = info.name;
         this.power = info.power;
         this.hp = info.hp;
@@ -48,25 +58,28 @@ class Vehicle
 
     identify()
     {
-        alert('this is ' + this.name);
+        cl('This is ' + this.name);
     }
 
     usePower()
     {
-        alert(this.name + ' activated ' + this.power);
+        cl(this.name + ' activated ' + this.power);
     }
 }
+
+// THE SUB-CLASSES
 
 class Car extends Vehicle
 {
     constructor(info)
     {
         super(info);
+        // We could add car-specific data here later (e.g., spoilerType)
     }
 
     drift()
     {
-        alert(this.name + ' performed a drift!');
+        cl(this.name + ' performed a drift!');
     }
 }
 
@@ -75,24 +88,51 @@ class Truck extends Vehicle
     constructor(info)
     {
         super(info);
+        // We could add truck-specific data here later (e.g., cargoCapacity)
     }
 
     haul()
     {
-        alert(this.name + ' hauled a heavy load!');
+        cl(this.name + ' hauled a heavy load!');
     }
 }
 
 //----//
 
-let roadrunner = new Car(fibn(vehicleData, 'RoadRunner'));
+// CAR EXAMPLE
+let roadRunnerData = fibn(vehicleData, 'RoadRunner');
 
-roadrunner.drift();
+// Safety Check
+if (roadRunnerData)
+{
+    let roadrunner = new Car(roadRunnerData);
+    
+    roadrunner.identify();
+    roadrunner.drift(); // Only Cars can drift
+}
+
+//----//
+
+// TRUCK EXAMPLE (To show the difference)
+let haulerData = fibn(vehicleData, 'IronHauler');
+
+// Safety Check
+if (haulerData)
+{
+    let hauler = new Truck(haulerData);
+
+    hauler.identify();
+    hauler.haul(); // Only Trucks can haul
+}
 
 //----//
 
 /*
+Output:
+This is RoadRunner
 RoadRunner performed a drift!
+This is IronHauler
+IronHauler hauled a heavy load!
 */
 
 //----//

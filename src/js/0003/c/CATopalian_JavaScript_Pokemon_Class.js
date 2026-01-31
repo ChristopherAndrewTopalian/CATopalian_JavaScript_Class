@@ -172,7 +172,8 @@ class FirePokemon extends Pokemon
             {
                 cl(this.name + ' blasts Flamethrower!');
             } 
-            else {
+            else
+            {
                 cl(this.name + ' does the ultimate FIRE SPIN!');
             }
         }

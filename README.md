@@ -32,6 +32,8 @@ Learn very important ways to program with Object Oriented Data Driven Class Patt
 
 [CATopalian_JavaScript_Pokemon_Class](src/js/0003/c/CATopalian_JavaScript_Pokemon_Class.js)
 
+---
+
 Video: https://www.youtube.com/watch?v=dDTdQsaqsDQ
 
 ---

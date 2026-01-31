@@ -23,24 +23,6 @@ let pokemonData =
 
 // shortcuts
 
-function ge(whichId)
-{
-    let result = document.getElementById(whichId);
-    return result;
-}
-
-function ce(whichType)
-{
-    let result = document.createElement(whichType);
-    return result;
-}
-
-function ba(whichElement)
-{
-    let result = document.body.append(whichElement);
-    return result;
-}
-
 function cl(whichMessage)
 {
     let result = console.log(whichMessage);
